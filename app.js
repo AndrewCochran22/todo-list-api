@@ -11,18 +11,25 @@ const todoList = [
   {
     id: 1,
     description: 'Implement a REST API',
+    completed: false,
   },
   {
     id: 2,
     description: 'Build a frontend',
+    completed: false,
+
   },
   {
     id: 3,
     description: '???',
+    completed: false,
+
   },
   {
     id: 4,
     description: 'Profit!',
+    completed: false,
+
   },
 ];
 
@@ -63,7 +70,8 @@ app.post('/api/todos', (req,res) => {
   if (req.body.description) {
     const newTodo = {
       id: nextId++,
-      description: req.body.description
+      description: req.body.description,
+      completed: false
     }
     todoList.push(newTodo);
     res.status(201);
@@ -79,13 +87,27 @@ app.post('/api/todos', (req,res) => {
 // PUT /api/todos/:id
 app.patch('/api/todos/:id', (req, res) => {
   // if req.body contains a description
-  if (req.body.description) {
+  if (req.body.description || req.body.description === '' || req.body.completed) {
     // get id from route
     const id = Number(req.params.id); 
     // find where the todo exists in the todoList array
     const todoIndex = todoList.findIndex((currTodo) => currTodo.id === id ? true : false)
     // update the object inside of the todoList array
-    todoList[todoIndex].description = req.body.description
+    // if there is a description on the request body
+    if(req.body.description) {
+      // set it on the todo item
+      todoList[todoIndex].description = req.body.description
+    }
+    // if the complete status is true or 'true'
+    if (req.body.completed === "true" || req.body.completed === true) {
+     // update it to true (boolean)
+      todoList[todoIndex].completed = true
+      // else if it is false or 'false'
+    } else if (req.body.completed === 'false' || req.body.completed === false) {
+      // set it to false (boolean)
+      todoList[todoIndex].completed = false
+    }
+
     // send back the updated todo item
     res.json(todoList[todoIndex])
   } else {

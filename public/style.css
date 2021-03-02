@@ -1,0 +1,25 @@
+body {
+    background: gold;
+    color: maroon;
+    font-family: copperplate, fantasy;
+}
+
+button {
+    background: goldenrod;
+    box-shadow: 0 2px 5px 0 maroon;
+}
+
+button:hover {
+    background-color: maroon;
+    color: white;
+}
+
+.complete {
+    text-decoration: line-through;
+    color: green;
+}
+
+h1 {
+    text-align: center;
+    background-color: white;
+}
